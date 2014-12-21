@@ -13,6 +13,7 @@ func TestNlptCLD2EnglishName(t *testing.T) {
 	}
 }
 
+/*
 func TestBasicEnglishName(t *testing.T) {
 	s := "This is an English sentence."
 	tag := "en"
@@ -22,3 +23,4 @@ func TestBasicEnglishName(t *testing.T) {
 		t.Fail()
 	}
 }
+*/
