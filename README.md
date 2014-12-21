@@ -1,40 +1,18 @@
-# cld2 nlpt
-Go wrapper for the cld2 language detection library by Google Chrome.
+# cld2
+--
+    import "cld2"
 
-## External Sources
-This wrapper owes its existence to 3 projects:
+Package cld2 implements language detection using the Compact Language Detector.
 
-* cld2 project -- original code
-* cld2 go wrapper
-* rust-cld2 wrapper
+This package includes the relevant sources from the cld2 project, so it doesn't
+require any external dependencies. For more information about CLD2, see
+https://code.google.com/p/cld2/.
 
-I'm not very good at C/C++ so I leaved heavily on wrapper projects in Go and Rust mentioned.
+## Usage
 
-
-## Get it
-
-```sh
-go get github.com/jbowles/cld2_nlpt
-```
-
-## Using it
+#### func  Detect
 
 ```go
-package main
-
-import "github.com/jbowles/cld2_nlpt"
-
-func main() {
-
-  string := "This is an english sentence"
-  buffer_length := len(string)
-  det := DetectLanguage(s, buffer_length)
-
+func Detect(text string) string
 ```
-
-## Misc.
-The first version used the original go wrapper
-
-```go
-
-```
+Detect returns the language code for detected language in the given text.
