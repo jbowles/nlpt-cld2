@@ -20,6 +20,7 @@ func TestDetectEnglish(t *testing.T) {
 		t.Log("Expected: ", tag, "but got... ", lang, "with ERROR:", err)
 		t.Fail()
 	}
+	printAll(t, tag, "no format", lang)
 }
 
 func TestEnglishName(t *testing.T) {
