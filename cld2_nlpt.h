@@ -82,29 +82,27 @@ extern "C" {
   const char* CLD2_LanguageName(Language lang);
   const char* CLD2_LanguageCode(Language lang);
   const char* CLD2_LanguageDeclaredName(Language lang);
+  const char* CLD2_DetectSummaryLanguage(char *data, int length);
+
+  // Return version text string, String is "code_version - data_build_date"
+  const char* CLD2_DetectLanguageVersion();
   Language CLD2_GetLanguageFromName(const char* src);
 
   // Scan interchange-valid UTF-8 bytes and detect most likely language
-  Language CLD2_DetectLanguage(
-                          const char* buffer,
-                          int buffer_length);
+  Language CLD2_DetectLanguage(const char* buffer,int buffer_length);
 
   // Scan interchange-valid UTF-8 bytes and detect list of top 3 languages.
   // language3[0] is usually also the return value
-  Language CLD2_DetectLanguageSummary(
-                          const char* buffer,
+  Language CLD2_DetectLanguageSummary(const char* buffer,
                           int buffer_length,
-                          bool is_plain_text,
-                          Language* language3,
+                          Language* language3, // int return n-number top langs
                           int* percent3,
-                          int* text_bytes,
-                          bool* is_reliable);
+                          int* text_bytes);
 
   // Same as above, with hints supplied
   // Scan interchange-valid UTF-8 bytes and detect list of top 3 languages.
   // language3[0] is usually also the return value
-  Language CLD2_DetectLanguageSummary2(
-                          const char* buffer,
+  Language CLD2_DetectLanguageSummary2(const char* buffer,
                           int buffer_length,
                           bool is_plain_text,
                           const char* tld_hint,       // "id" boosts Indonesian
@@ -194,12 +192,6 @@ extern "C" {
                           ResultChunks *resultchunkvector,
                           int* text_bytes,
                           bool* is_reliable);
-
-  // Return version text string
-  // String is "code_version - data_build_date"
-  const char* CLD2_DetectLanguageVersion();
-
-
   // Public use flags, debug output controls
   static const int kCLDFlagScoreAsQuads = 0x0100;  // Force Greek, etc. => quads
   static const int kCLDFlagHtml =         0x0200;  // Debug HTML => stderr
