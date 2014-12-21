@@ -7,7 +7,7 @@
 package cld2_nlpt
 
 // #include <stdlib.h>
-// #include "cld2_min/cld2_nlpt.h"
+// #include "cld2_nlpt.h"
 import "C"
 import "unsafe"
 
