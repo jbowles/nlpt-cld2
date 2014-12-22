@@ -52,12 +52,13 @@ typedef CLD2::int32 int32;
 ////
 ////
 //
-typedef unsigned long size_t;
+//typedef unsigned long size_t;
 typedef int int32;
 typedef unsigned short uint16;
-typedef char bool;
+//typedef char bool;
 // Corresponds to the Language enumeration in the C++ headers.
 typedef int Language;
+typedef Language language_hint;
 
 #endif
 
@@ -65,6 +66,7 @@ typedef int Language;
 extern "C" {
 #endif
 
+  /*
   typedef struct {
     const char* content_language_hint;      // "mi,en" boosts Maori and English
     const char* tld_hint;                   // "id" boosts Indonesian
@@ -82,14 +84,14 @@ extern "C" {
     uint16 pad;                 // Make multiple of 4 bytes
   } ResultChunk;
 
-  //typedef std::vector<ResultChunk> ResultChunkVector;
-
+  typedef std::vector<ResultChunk> ResultChunkVector;
   // A wrapper around ResultChunkVector, which is a C++ type.
   typedef void ResultChunks;
   ResultChunks *CLD2_ResultChunkVector_new();
   const ResultChunk *CLD2_ResultChunkVector_data(const ResultChunks *chunks);
   size_t CLD2_ResultChunkVector_size(const ResultChunks *chunks);
   void CLD2_ResultChunkVector_delete(ResultChunks *chunks);
+  */
 
   // These APIs are in a private header included by a public header, but
   // they're really useful, so let's assume they're public.
@@ -104,6 +106,14 @@ extern "C" {
 
   // Scan interchange-valid UTF-8 bytes and detect most likely language
   Language CLD2_DetectLanguage(const char* buffer,int buffer_length);
+
+  // TODO: add support for passing language hints. will require mapping table for the c++ table of supported languages.
+  Language CLD2_DetectExtendLanguageSummary(
+      const char *buffer,
+      int buffer_length,
+      int rank,
+      int percent,
+      int normal_score);
 
   /*
   // Scan interchange-valid UTF-8 bytes and detect list of top 3 languages.

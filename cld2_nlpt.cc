@@ -39,6 +39,7 @@ const char* CLD2_Static_ExtDetectLanguageSummary(char *data) {
     return CLD2::LanguageCode(summary_lang);
 }
 
+/*
 ResultChunks *CLD2_ResultChunkVector_new() {
     return static_cast<ResultChunks*>(new CLD2::ResultChunkVector());
 }
@@ -60,6 +61,7 @@ void CLD2_ResultChunkVector_delete(ResultChunks *chunks) {
         static_cast<CLD2::ResultChunkVector *>(chunks);
     delete vec;
 }
+*/
 
 const char* CLD2_LanguageName(Language lang) {
     return CLD2::LanguageName(lang);
@@ -89,6 +91,36 @@ Language CLD2_DetectLanguage(const char* buffer,int buffer_length) {
   }
   return CLD2::DetectLanguage(buffer, buffer_length, is_plain_text, &is_reliable);
 }
+
+// TODO: add support for passing language hints. will require mapping table for the c++ table of supported languages.
+Language CLD2_DetectExtendLanguageSummary(const char *buffer, int buffer_length, int rank, int percent, int normal_score) {
+    bool is_plain_text = true;
+    bool allow_extended_lang = true;
+    bool is_reliable = true;
+    CLD2::CLDHints cldhints = {NULL, NULL, 0, CLD2::UNKNOWN_LANGUAGE};
+    int flags = 0;
+    CLD2::Language language3[rank]; //3
+    int percent3[percent]; //3
+    double normalized_score3[normal_score]; //3
+    CLD2::ResultChunkVector resultchunkvector;
+    int text_bytes;
+    if (buffer_length <= 0) {
+      buffer_length = strlen(buffer);
+    }
+
+    return CLD2::ExtDetectLanguageSummary(buffer, 
+            buffer_length,
+            is_plain_text,
+            &cldhints,
+            flags,
+            language3,
+            percent3,
+            normalized_score3,
+            &resultchunkvector,
+            &text_bytes,
+            &is_reliable);
+}
+
 
 /*
 Language CLD2_DetectLanguageSummary(const char* buffer, int buffer_length, Language* language3, int* percent3, int* text_bytes) {
