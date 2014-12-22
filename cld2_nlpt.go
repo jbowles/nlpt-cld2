@@ -34,6 +34,19 @@ type LanguageScore struct {
 func DetectLanguageInfo() LanguageInfo {
 	...
 }
+
+type Cld2Hints struct {
+	ContentLanguageHint string
+	TldHint             string
+	EncodingHint        int
+	LanguageHint        int
+}
+		c_hints := Cld2Hints{
+			ContentLanguageHint: C.CString(""),
+			TldHint:             C.CString(""),
+			EncodingHint:        C.int(0),
+			LanguageHint:        C.int(0),
+		}
 */
 
 type Language string
