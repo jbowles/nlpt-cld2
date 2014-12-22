@@ -33,12 +33,26 @@ typedef CLD2::int32 int32;
 
 #else
 
-// We're being run through bindgen or a similar tool, so just stub all
-// this.
-//typedef long long size_t;
-//////////////////// WOAH HACK BECAUSE ... APPLE!! ///////////////////////////
-//////////////////// DARWIN: /usr/include/sys/_types ln: 30 ///////////////////////////
-typedef __darwin_size_t size_t;
+//// We're being run through bindgen or a similar tool, so just stub all
+//// this.
+////typedef long long size_t;
+////////////////////// WOAH HACK BECAUSE ... APPLE!! ///////////////////////////
+////
+//// github.com/jbowles/cld2_nlpt
+//// In file included from ./cld2_nlpt.go:10:
+//// ./cld2_nlpt.h:49:19: error: typedef redefinition with different types ('long long' vs '__darwin_size_t' (aka 'unsigned long'))
+//// typedef long long size_t;
+//                  ^
+//// /usr/include/sys/_types/_size_t.h:30:32: note: previous definition is here
+//// typedef __darwin_size_t        size_t;/
+////
+////http://stackoverflow.com/questions/11603818/why-is-there-ambiguity-between-uint32-t-and-uint64-t-when-using-size-t-on-mac-os
+////////////////////// DARWIN: /usr/include/sys/_types ln: 30 ///////////////////////////
+////typedef __darwin_size_t size_t;
+////
+////
+//
+typedef unsigned long size_t;
 typedef int int32;
 typedef unsigned short uint16;
 typedef char bool;
@@ -82,7 +96,7 @@ extern "C" {
   const char* CLD2_LanguageName(Language lang);
   const char* CLD2_LanguageCode(Language lang);
   const char* CLD2_LanguageDeclaredName(Language lang);
-  const char* CLD2_DetectSummaryLanguage(char *data, int length);
+  const char* CLD2_Static_ExtDetectLanguageSummary(char *data);
 
   // Return version text string, String is "code_version - data_build_date"
   const char* CLD2_DetectLanguageVersion();
@@ -91,6 +105,7 @@ extern "C" {
   // Scan interchange-valid UTF-8 bytes and detect most likely language
   Language CLD2_DetectLanguage(const char* buffer,int buffer_length);
 
+  /*
   // Scan interchange-valid UTF-8 bytes and detect list of top 3 languages.
   // language3[0] is usually also the return value
   Language CLD2_DetectLanguageSummary(const char* buffer,
@@ -199,6 +214,7 @@ extern "C" {
   static const int kCLDFlagVerbose =      0x0800;  // More debug HTML => stderr
   static const int kCLDFlagQuiet =        0x1000;  // Less debug HTML => stderr
   static const int kCLDFlagEcho =         0x2000;  // Echo input => stderr
+  */
 
 #ifdef __cplusplus
 };

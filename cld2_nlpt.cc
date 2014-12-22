@@ -7,7 +7,7 @@
 
 #include "compact_lang_det.h"
 
-const char* CLD2_DetectSummaryLanguage(char *data, int length) {
+const char* CLD2_Static_ExtDetectLanguageSummary(char *data) {
 
     bool is_plain_text = true;
     CLD2::CLDHints cldhints = {NULL, NULL, 0, CLD2::UNKNOWN_LANGUAGE};
@@ -20,9 +20,7 @@ const char* CLD2_DetectSummaryLanguage(char *data, int length) {
     int text_bytes;
     bool is_reliable;
 
-    if (length <= 0) {
-        length = strlen(data);
-    }
+    int length = strlen(data);
 
     CLD2::Language summary_lang = CLD2::UNKNOWN_LANGUAGE;
 
@@ -92,7 +90,8 @@ Language CLD2_DetectLanguage(const char* buffer,int buffer_length) {
   return CLD2::DetectLanguage(buffer, buffer_length, is_plain_text, &is_reliable);
 }
 
-Language CLD2_DetectLanguageSummary(const char* buffer,int buffer_length,Language* language3,int* percent3,int* text_bytes) {
+/*
+Language CLD2_DetectLanguageSummary(const char* buffer, int buffer_length, Language* language3, int* percent3, int* text_bytes) {
   bool is_plain_text = true;
   bool is_reliable = true;
   if (buffer_length <= 0) {
@@ -101,7 +100,6 @@ Language CLD2_DetectLanguageSummary(const char* buffer,int buffer_length,Languag
   return CLD2::DetectLanguageSummary(buffer,buffer_length,is_plain_text,language3,percent3,text_bytes,&is_reliable);
 }
 
-/*
 Language CLD2_DetectLanguageSummary2(const char* buffer,
                                      int buffer_length,
                                      bool is_plain_text,
