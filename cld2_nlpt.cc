@@ -120,7 +120,6 @@ Language CLD2_DetectExtendLanguageSummary(const char *buffer, int buffer_length,
             &text_bytes,
             &is_reliable);
 }
-
 /*
 Language CLD2_DetectLanguageSummary(const char* buffer, int buffer_length, Language* language3, int* percent3, int* text_bytes) {
   bool is_plain_text = true;

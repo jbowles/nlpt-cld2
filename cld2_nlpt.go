@@ -70,10 +70,17 @@ func (e Cld2NlptError) Error() string {
 	return fmt.Sprint("%v, %v", e.When, e.Msg)
 }
 
-// Detect returns the language code for detected language in the given text.
+// SimpleDetect returns the language code for detected language in the given text.
 // It uses nlpt_wrapper.h and returns the language code, eg. 'en'.
-// C++ function sets the length to the that of the text.
-// See nlpt_wrapper tests.
+// C++ function sets the buffer length to the that of the text.
+//
+// By default it defines plain text as true, reliable as true. This means it will not strip out HTML tags, returns only detection rankings that are know to be reliable.
+//
+// It also defaults return value to UNKOWN_LANGUAGE before running detection. If a language cannot be reliably detected then UNKOWN will be returned.
+//	  bool is_plain_text = true;
+//	  bool is_reliable = true;
+//    ...
+//	  CLD2::Language summary_lang = CLD2::UNKNOWN_LANGUAGE;
 //
 func SimpleDetect(text string) (lang Language, err error) {
 	cs := C.CString(text)
@@ -85,17 +92,26 @@ func SimpleDetect(text string) (lang Language, err error) {
 	} else {
 		err = Cld2NlptError{
 			time.Date(1989, 3, 15, 22, 30, 0, 0, time.UTC),
-			"result returned nil: C.CLD2_DetectSummaryLanguage(cs, -1)",
+			"result returned nil: C.CLD2_Static_ExtDetectLanguageSummary(cs)",
 		}
 		return lang, err
 	}
 	return
 }
 
-// DetectLanguage uses nlpt_wrapper.h and returns a format of the output. Choices are 'name' ('ENGLISH'), 'code' ('en'), 'declname' ('ENGLISH').
-// See nlpt_wrapper tests.
-// If the buffer_length is less than or equal to zero the C++ code will set the length to the that of the text.
+// DetectLanguage uses nlpt_wrapper.h and returns a format of the output.
+// cld2 defualts languages to ENGLISH, and so any unreliability returns default; which can yeild wrong results, expecially for small data sets.
+// By default it defines plain text as true and reliable as true. This means it will not strip out HTML tags and returns only detection rankings that are know to be reliable.
+//	  bool is_plain_text = true;
+//	  bool is_reliable = true;
 //
+// Format Choices
+//	  'name' returns 'ENGLISH'
+//	  'code' returns 'en'
+//	  'declname' returns 'ENGLISH'
+//
+// If the buffer_length is less than or equal to zero the C++ code will set the length to the that of the text.
+// See cld2_nlpt_test for usage.
 func DetectLanguage(buffer_length int, text, format string) (lang Language, err error) {
 	c_buffer := C.int(buffer_length)
 	c_string := C.CString(text)
@@ -130,12 +146,23 @@ func DetectLanguage(buffer_length int, text, format string) (lang Language, err 
 	return
 }
 
-// DetectExtendedLanguage uses nlpt_wrapper.h and returns a format of the output. It provides the choice to select 1 of 3 ranked languages, the percent, as well as the normal_score. Formatting choices are 'name' ('ENGLISH'), 'code' ('en'), 'declname' ('ENGLISH').
-// See nlpt_wrapper tests.
+// DetectExtendedLanguage uses nlpt_wrapper.h and returns a format of the output.
+// By default it defines plain text as true, reliable as true, and language hints as unknown. This means it will not strip out HTML tags, returns only detection rankings that are know to be reliable, and in the case of no reliability returns UNKNOWN.
+//	  bool is_plain_text = true;
+//	  bool is_reliable = true;
+//    ...
+//	  CLD2::CLDHints cldhints = {NULL, NULL, 0, CLD2::UNKNOWN_LANGUAGE};
+//
+// It provides the choice to select out of index of ranked languages, the percent, and normal_score. See cld2 for more info on what these choices mean. Default to 3 for most accuracy.
+// Format Choices
+//	  'name' returns 'ENGLISH'
+//	  'code' returns 'en'
+//	  'declname' returns 'ENGLISH'
+//
 // If the buffer_length is less than or equal to zero the C++ code will set the length to the that of the text.
+// See cld2_nlpt_test for usage.
 //
 // TODO: add support for passing language hints. will require mapping table for the c++ table of supported languages.
-//
 func DetectExtendedLanguage(text string, format string, buffer_length, rank, percent, normal_score int) (lang Language, err error) {
 	c_buffer := C.int(buffer_length)
 	c_string := C.CString(text)
