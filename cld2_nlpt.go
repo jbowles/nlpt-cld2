@@ -1,9 +1,20 @@
 // Package cld2 implements language detection using the
 // Compact Language Detector.
 //
+// The `nlpt` part is a side project of mine for a Natural Language Processing Toolkit in go.
+//
 // This package includes the relevant sources from the cld2
 // project, so it doesn't require any external dependencies.
+// It also uses the cld2_nlpt.h and cld2_nlpt.cc files to create a specific CLD2_* namespace
+// to distinguish usage here with the original c++ project.
+//
 // For more information about CLD2, see https://code.google.com/p/cld2/.
+//
+// This package leaned heavily on two existing projects:
+// cld2 go wrapper for extracting relevant code: https://github.com/rainycape/cld2
+// rust-cld2 wrapper for creating custom header and c++ files for the CLD2_* namespace https://github.com/emk/rust-cld2
+//
+
 package cld2_nlpt
 
 // #include <stdlib.h>
