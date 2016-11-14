@@ -17,8 +17,11 @@
 
 package cld2_nlpt
 
-// #include <stdlib.h>
-// #include "cld2_nlpt.h"
+/*
+#cgo CXXFLAGS: -std=c++03
+#include <stdlib.h>
+#include "cld2_nlpt.h"
+*/
 import "C"
 
 import (
