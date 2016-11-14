@@ -1,6 +1,6 @@
 {
 	"ImportPath": "github.com/jbowles/nlpt-cld2",
-	"GoVersion": "go1.6",
-	"GodepVersion": "v58",
+	"GoVersion": "go1.7",
+	"GodepVersion": "v74",
 	"Deps": []
 }
