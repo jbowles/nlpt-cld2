@@ -28,7 +28,7 @@ I'm not very good at C/C++ so I leaved heavily on wrapper projects in Go and Rus
 ## Get it
 
 ```sh
-go get github.com/jbowles/cld2_nlpt
+go get github.com/jbowles/nlpt-cld2
 ```
 
 ## Using it
@@ -36,7 +36,7 @@ See tests for full usage. This package consists of 5 public functions only.
 
 The function `Detect` is the preferred way of using this package, but it requires many arguments that depend on user familiarity with the cld2 project. It uses the full set of options for cld2, including extended language detection. It will eventually support passing a struct of language hints.
 
-If user has no familiarty with cld2 or doesn't want to be bothered with complex usage then `StaticDetect` is for you: it uses the extended language feature and pre-defines all the options to cld2; it requires 1 argument: text to be identified. 
+If user has no familiarty with cld2 or doesn't want to be bothered with complex usage then `StaticDetect` is for you: it uses the extended language feature and pre-defines all the options to cld2; it requires 1 argument: text to be identified.
 
 The 3 remaining public functions can be used to return language code, name, or displayed name; they do not use extended language features and use the most basic options in cld2.
 

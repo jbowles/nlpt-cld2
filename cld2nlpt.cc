@@ -1,4 +1,4 @@
-#include "cld2_nlpt.h"
+#include "cld2nlpt.h"
 
 #include <cstddef>
 #include <string.h>
@@ -24,7 +24,7 @@ const char* CLD2_Static_ExtDetectLanguageSummary(char *data) {
 
     CLD2::Language summary_lang = CLD2::UNKNOWN_LANGUAGE;
 
-    summary_lang = CLD2::ExtDetectLanguageSummary(data, 
+    summary_lang = CLD2::ExtDetectLanguageSummary(data,
             length,
             is_plain_text,
             &cldhints,
@@ -108,7 +108,7 @@ Language CLD2_DetectExtendLanguageSummary(const char *buffer, int buffer_length,
       buffer_length = strlen(buffer);
     }
 
-    return CLD2::ExtDetectLanguageSummary(buffer, 
+    return CLD2::ExtDetectLanguageSummary(buffer,
             buffer_length,
             is_plain_text,
             &cldhints,

@@ -20,7 +20,7 @@ package cld2
 /*
 #cgo CXXFLAGS: -std=c++03
 #include <stdlib.h>
-#include "cld2_nlpt.h"
+#include "cld2nlpt.h"
 */
 import "C"
 

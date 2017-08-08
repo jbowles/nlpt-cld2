@@ -1,22 +1,24 @@
 package cld2
 
+/*
+package cld2testing
+
 import (
 	"testing"
 
-	"github.com/jbowles/cld2_nlpt"
+	cld2t "github.com/jbowles/nlpt-cld2"
 )
 
 func TestDetectEnglish(t *testing.T) {
 	s := "This is an English sentence."
-	tag := cld2.Language("en")
-	lang, err := cld2.SimpleDetect(s)
+	tag := cld2t.Language("en")
+	lang, err := cld2t.SimpleDetect(s)
 	if tag != lang || err != nil {
 		t.Log("Expected: ", tag, "but got... ", lang, "with ERROR:", err)
 		t.Fail()
 	}
 }
 
-/*
 func TestEnglishName(t *testing.T) {
 	s := "This is an English sentence."
 	tag := Language("ENGLISH")
