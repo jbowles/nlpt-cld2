@@ -45,85 +45,19 @@ In terms of accuracy and reliability `Detect` and `StaticDetect` are most reliab
 ```go
 package main
 
-import "github.com/jbowles/cld2_nlpt"
+import (
+	"fmt"
+
+	"github.com/jbowles/nlpt-cld2"
+)
+
+var s1 = "this sentence is in english dooode"
+
+func this() {
+}
 
 func main() {
-
-  string := "This is an english sentence"
-  cld2_NLPT.GetLanguageName(s)
-   // => ENGLISH
-```
-
-## Complex usage
-In a project called `smallgear` a language detection API defines the endpoint: `r.HandleFunc("/lang/detect/{text}", LanguageDetect).Methods("GET")`.
-
-LanguageDetect returns a JSON object with timestamp along with the language name and code for the highest ranking detected languages:
-
-```go
-func LanguageDetect(w http.ResponseWriter, req *http.Request) {
-	params := mux.Vars(req)
-	text := params["text"]
-	detected_lang := nlpt_detect.Detect(text, "name", len(text), 3, 3, 3)
-	second_rank_lang := nlpt_detect.Detect(text, "name", len(text), 2, 2, 2)
-	third_rank_lang := nlpt_detect.Detect(text, "name", len(text), 1, 1, 1)
-	four_rank_lang := nlpt_detect.Detect(text, "name", len(text), 0, 0, 0)
-
-	detected_code := nlpt_detect.Detect(text, "code", len(text), 3, 3, 3)
-	second_rank_code := nlpt_detect.Detect(text, "code", len(text), 2, 2, 2)
-	third_rank_code := nlpt_detect.Detect(text, "code", len(text), 1, 1, 1)
-	four_rank_code := nlpt_detect.Detect(text, "code", len(text), 0, 0, 0)
-
-	//w.Write([]byte(m))
-
-	langres := &LangDetectResponse{
-		Timestamp: time.Now(),
-		Detected1: detected_lang,
-		Code1:     detected_code,
-		Detected2: second_rank_lang,
-		Code2:     second_rank_code,
-		Detected3: third_rank_lang,
-		Code3:     third_rank_code,
-		Detected4: four_rank_lang,
-		Code4:     four_rank_code,
-		Input:     text,
-	}
-
-	response, err := json.Marshal(langres)
-	if err != nil {
-		log.Printf("Error", err)
-	}
-	w.Write(response)
-}
-```
-
-
-## Misc.
-The first version used the original go wrapper
-
-```go
-// Package cld2 implements language detection using the
-// Compact Language Detector.
-//
-// This package includes the relevant sources from the cld2
-// project, so it doesn't require any external dependencies.
-// For more information about CLD2, see https://code.google.com/p/cld2/.
-
-package cld2_nlpt
-
-// #include <stdlib.h>
-// #include "cld2_min/cld2.h"
-import "C"
-import "unsafe"
-
-// Detect returns the language code for detected language
-// in the given text.
-func Detect(text string) (lang string) {
-	cs := C.CString(text)
-	res := C.DetectLang(cs, -1)
-	defer C.free(unsafe.Pointer(cs))
-	if res != nil {
-		lang = C.GoString(res)
-	}
-	return
+	res, err := cld2.SimpleDetect(s1)
+	fmt.Printf("%v %v \n", res, err)
 }
 ```
