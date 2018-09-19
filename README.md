@@ -1,4 +1,8 @@
 # cld2 nlpt
+
+DEPRECATED for whatlanggo: [https://github.com/abadojack/whatlanggo](https://github.com/abadojack/whatlanggo)
+
+
 This is a separate fork of [rainycape's wrapper of cld2](https://github.com/rainycape/cld2).
 
 From the README of rainycape wrapper of cld2:
